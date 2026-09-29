@@ -4,6 +4,7 @@
 #include "freertos/task.h"
 
 #define LED_GPIO GPIO_NUM_14
+int i = 1;
 
 void led_task(void *param){
   int led_state=0;
@@ -12,14 +13,15 @@ void led_task(void *param){
 
     gpio_set_level(LED_GPIO, led_state);
 
-    vTaskDelay(pdMS_TO_TICKS(500));
+    vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
 
 void print_task(void *param){
   while(1){
-    printf("System is running.\n");
-    vTaskDelay(pdMS_TO_TICKS(100));
+    printf("int is %d bytes.\n", i);
+    i++;
+    vTaskDelay(pdMS_TO_TICKS(300));
   }
 }
 
@@ -30,7 +32,4 @@ void app_main(void){
   xTaskCreate(led_task,"led_task", 2048,NULL,1,NULL);
   xTaskCreate(print_task,"print_task", 2048,NULL,1,NULL);
 }
-
-
-
 
